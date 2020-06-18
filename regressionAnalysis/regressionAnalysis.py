@@ -28,9 +28,20 @@ yg = np.array(yg)
 
 # TODO: 平均,分散,共分散を求める関数をつくる
 def MVC(x,y):
-    global x_mean, y_mean, x_variety, y_variety
+    global x_mean, y_mean, x_variety, y_variety, xy_cov
     x_mean = x.mean()
     y_mean = y.mean()
     x_variety = np.sum(np.square(x - x_mean)) / len(x)
     y_variety = np.sum(np.square(y - y_mean)) / len(y)
-    
+    xy_cov = ((x - x_mean).dot((y - y_mean).T)) / len(x)
+
+# 回帰直線
+MVC(rr,inv)
+b = xy_cov / x_variety
+a = y_mean - b * x_mean
+print('inv = ' +str(a)+ '+'+str(b)+'*rr')
+MVC(yg,inv)
+b = xy_cov / x_variety
+a = y_mean - b * x_mean
+print('inv = ' +str(a)+ '+'+str(b)+'*yg')
+
