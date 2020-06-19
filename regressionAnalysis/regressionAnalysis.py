@@ -26,7 +26,7 @@ inv = np.array(inv)
 rr = np.array(rr)
 yg = np.array(yg)
 
-# TODO: 平均,分散,共分散を求める関数をつくる
+# TODO: 平均,分散,共分散を求める関数:MVC(x,y)
 def MVC(x,y):
     global x_mean, y_mean, x_variety, y_variety, xy_cov
     x_mean = x.mean()
@@ -35,19 +35,30 @@ def MVC(x,y):
     y_variety = np.sum(np.square(y - y_mean)) / len(y)
     xy_cov = ((x - x_mean).dot((y - y_mean).T)) / len(x)
 
-# TODO: 係数
+# TODO: 回帰係数を求める関数:coefficient()
 def coefficient():
     global a,b
     b = xy_cov / x_variety
     a = y_mean - b * x_mean
 
+# TODO: t値を求める,t検定(有意水準95%)を行う関数:t_value(x)
+def t_value(x):
+    x_cov = np.sqrt(x_variety)
+    t = b / (x_cov / np.sqrt(len(x)))
+    if t > 1.96 or t < -1.96:
+        print('t値:'+str(t)+'より、有意水準95%で有意であると言える.')
+    else:
+        print('t値:'+str(t)+'より、有意水準95%で有意でないと言える.')
 
 # 回帰直線の標準出力
 MVC(rr,inv)
 coefficient()
 print('inv = ' +str(a)+ '+'+str(b)+'*rr')
+t_value(rr)
+print('---------END---------')
 
 MVC(yg,inv)
 coefficient()
 print('inv = ' +str(a)+ '+'+str(b)+'*yg')
-
+t_value(yg)
+print('---------END---------')
