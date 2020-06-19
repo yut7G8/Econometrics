@@ -31,8 +31,8 @@ def MVC(x,y):
     global x_mean, y_mean, x_variety, y_variety, xy_cov
     x_mean = x.mean()
     y_mean = y.mean()
-    x_variety = np.sum(np.square(x - x_mean)) / len(x)
-    y_variety = np.sum(np.square(y - y_mean)) / len(y)
+    x_variety = x.var()
+    y_variety = y.var()
     xy_cov = ((x - x_mean).dot((y - y_mean).T)) / len(x)
 
 # TODO: 回帰係数を求める関数:coefficient()
@@ -43,8 +43,8 @@ def coefficient():
 
 # TODO: t値を求める,t検定(有意水準95%)を行う関数:t_value(x)
 def t_value(x):
-    x_cov = np.sqrt(x_variety)
-    t = b / (x_cov / np.sqrt(len(x)))
+    x_sd = np.std(x,ddof=2)
+    t = b / (x_sd * np.sqrt(len(x)-2))
     if t > 1.96 or t < -1.96:
         print('t値:'+str(t)+'より、有意水準95%で有意であると言える.')
     else:
@@ -53,12 +53,12 @@ def t_value(x):
 # 回帰直線の標準出力
 MVC(rr,inv)
 coefficient()
-print('inv = ' +str(a)+ '+'+str(b)+'*rr')
+print('inv = '+str(a)+'+'+str(b)+'*rr')
 t_value(rr)
 print('---------END---------')
 
 MVC(yg,inv)
 coefficient()
-print('inv = ' +str(a)+ '+'+str(b)+'*yg')
+print('inv = '+str(a)+'+'+str(b)+'*yg')
 t_value(yg)
 print('---------END---------')
