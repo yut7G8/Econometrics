@@ -35,13 +35,19 @@ def MVC(x,y):
     y_variety = np.sum(np.square(y - y_mean)) / len(y)
     xy_cov = ((x - x_mean).dot((y - y_mean).T)) / len(x)
 
-# 回帰直線
+# TODO: 係数
+def coefficient():
+    global a,b
+    b = xy_cov / x_variety
+    a = y_mean - b * x_mean
+
+
+# 回帰直線の標準出力
 MVC(rr,inv)
-b = xy_cov / x_variety
-a = y_mean - b * x_mean
+coefficient()
 print('inv = ' +str(a)+ '+'+str(b)+'*rr')
+
 MVC(yg,inv)
-b = xy_cov / x_variety
-a = y_mean - b * x_mean
+coefficient()
 print('inv = ' +str(a)+ '+'+str(b)+'*yg')
 
