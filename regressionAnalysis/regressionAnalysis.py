@@ -11,9 +11,9 @@ inv = [] # 投資率
 rr = [] # 利子率
 yg = [] # GDP成長率
 
+print('読み込み中')
 wb = openpyxl.load_workbook('macro2015.xlsx')
 sheet = wb.get_sheet_by_name('Sheet1')
-print('読み込み中')
 for row in range(2, sheet.max_row + 1):
     year.append(sheet['A' + str(row)].value)
     inv.append(sheet['B' + str(row)].value)
@@ -42,9 +42,15 @@ def coefficient():
     a = y_mean - b * x_mean
 
 # TODO: t値を求める,t検定(有意水準95%)を行う関数:t_value(x)
-def t_value(x):
-    x_sd = np.std(x,ddof=1)
-    t = b / (x_sd / np.sqrt(len(x)-1))
+def t_value(x,y):
+    # 残差を求める
+    y_hat = a + b * x
+    e = y - y_hat
+    e2_sum = np.sum(np.square(e))
+    s2 = e2_sum / len(e) - 2
+    x2_sum = np.sum(np.square(x - x_mean))
+    sb2 = s2 / x2_sum
+    t = b / np.sqrt(sb2)
     if t > 1.96 or t < -1.96:
         print('t値:'+str(t)+'より、有意水準95%で有意であると言える.')
     else:
@@ -54,12 +60,10 @@ def t_value(x):
 MVC(rr,inv)
 coefficient()
 print('inv = '+str(a)+'+'+str(b)+'*rr')
-t_value(rr)
+t_value(rr,inv)
 print('---------END---------')
-print(len(rr))
 MVC(yg,inv)
 coefficient()
 print('inv = '+str(a)+'+'+str(b)+'*yg')
-t_value(yg)
+t_value(yg,inv)
 print('---------END---------')
-print(len(yg))
