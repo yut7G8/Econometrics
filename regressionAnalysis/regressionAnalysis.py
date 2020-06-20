@@ -43,8 +43,8 @@ def coefficient():
 
 # TODO: t値を求める,t検定(有意水準95%)を行う関数:t_value(x)
 def t_value(x):
-    x_sd = np.std(x,ddof=2)
-    t = b / (x_sd * np.sqrt(len(x)-2))
+    x_sd = np.std(x,ddof=1)
+    t = b / (x_sd / np.sqrt(len(x)-1))
     if t > 1.96 or t < -1.96:
         print('t値:'+str(t)+'より、有意水準95%で有意であると言える.')
     else:
@@ -56,9 +56,10 @@ coefficient()
 print('inv = '+str(a)+'+'+str(b)+'*rr')
 t_value(rr)
 print('---------END---------')
-
+print(len(rr))
 MVC(yg,inv)
 coefficient()
 print('inv = '+str(a)+'+'+str(b)+'*yg')
 t_value(yg)
 print('---------END---------')
+print(len(yg))
