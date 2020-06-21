@@ -4,6 +4,7 @@
 # import module
 import numpy as np
 import openpyxl
+import matplotlib.pyplot as plt
 
 # TODO: macro2015.xlsxからyear,inv,rr,ygを読み込み
 year = [] # 年
@@ -61,9 +62,14 @@ MVC(rr,inv)
 coefficient()
 print('inv = '+str(a)+'+'+str(b)+'*rr')
 t_value(rr,inv)
-print('---------END---------')
+
 MVC(yg,inv)
 coefficient()
 print('inv = '+str(a)+'+'+str(b)+'*yg')
 t_value(yg,inv)
-print('---------END---------')
+
+# TODO: プロットと可視化
+plt.scatter(rr,inv)
+plt.show()
+plt.scatter(yg,inv)
+plt.show()
