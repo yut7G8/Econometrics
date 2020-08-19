@@ -5,7 +5,9 @@
 import numpy as np
 import pandas as pd
 from pandas import Series, DataFrame
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+lr = LinearRegression() # 線形回帰のインスタンスを生成
 # 不要な警告を非表示にする
 import warnings
 warnings.filterwarnings('ignore')
@@ -43,5 +45,16 @@ plt.show() # 出力
 plt.scatter(yg, sg)
 plt.title('yg vs sg') # タイトル
 plt.xlabel('yg') # X軸ラベル
+plt.ylabel('sg') # y軸ラベル
+plt.show() # 出力
+
+# 勾配降下法
+lr.fit(r, sg)
+print('sg={0}*r+{1}'.format(lr.intercept_,lr.coef_))
+# 散布図を出力
+plt.scatter(r, sg)
+plt.plot(r, lr.predict(r), color='r')
+plt.title('r vs sg') # タイトル
+plt.xlabel('r') # x軸ラベル
 plt.ylabel('sg') # y軸ラベル
 plt.show() # 出力
