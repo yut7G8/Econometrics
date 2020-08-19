@@ -35,7 +35,13 @@ sg = np.array(df.loc[:, ['sg']])
 
 # 散布図を出力
 plt.scatter(r, sg)
-plt.title('r vs sg')
+plt.title('r vs sg') # タイトル
 plt.xlabel('r') # x軸ラベル
+plt.ylabel('sg') # y軸ラベル
+plt.show() # 出力
+
+plt.scatter(yg, sg)
+plt.title('yg vs sg') # タイトル
+plt.xlabel('yg') # X軸ラベル
 plt.ylabel('sg') # y軸ラベル
 plt.show() # 出力
