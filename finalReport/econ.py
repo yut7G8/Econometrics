@@ -8,6 +8,8 @@ from pandas import Series, DataFrame
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 lr = LinearRegression() # 線形回帰のインスタンスを生成
+from sklearn.model_selection import train_test_split
+
 # 不要な警告を非表示にする
 import warnings
 warnings.filterwarnings('ignore')
@@ -48,9 +50,9 @@ plt.xlabel('yg') # X軸ラベル
 plt.ylabel('sg') # y軸ラベル
 plt.show() # 出力
 
-# 勾配降下法
+# 単回帰分析
 lr.fit(r, sg)
-print('sg={}*r+{}'.format(lr.intercept_,lr.coef_))
+print('sg={}+{}*r'.format(lr.intercept_,lr.coef_))
 # 散布図を出力
 plt.scatter(r, sg)
 plt.plot(r, lr.predict(r), color='r')
@@ -60,7 +62,7 @@ plt.ylabel('sg') # y軸ラベル
 plt.show() # 出力
 
 lr.fit(yg, sg)
-print('sg={}*yg+{}'.format(lr.intercept_,lr.coef_))
+print('sg={}+{}*yg'.format(lr.intercept_,lr.coef_))
 # 散布図を出力
 plt.scatter(yg, sg)
 plt.plot(yg, lr.predict(yg), color='r')
@@ -68,3 +70,13 @@ plt.title('yg vs sg') # タイトル
 plt.xlabel('yg') # X軸ラベル
 plt.ylabel('sg') # y軸ラベル
 plt.show() # 出力
+
+# 重回帰分析
+# 説明変数X,目的変数yを用意。
+X = df.loc[:, ['r', 'yg']].values
+y = df.loc[:, ['sg']].values
+
+# ホールド・アウト法
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state = 0)
+lr.fit(X_train, y_train) # 重回帰線形モデル,trainデータのみ。
+print('sg={}+{}*X'.format(lr.intercept_,lr.coef_))
