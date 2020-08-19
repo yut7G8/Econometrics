@@ -80,3 +80,8 @@ y = df.loc[:, ['sg']].values
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state = 0)
 lr.fit(X_train, y_train) # 重回帰線形モデル,trainデータのみ。
 print('sg={}+{}*X'.format(lr.intercept_,lr.coef_))
+
+# 決定係数/過学習の有無の確認
+print('R^2')
+print('train: %.3f' % lr.score(X_train, y_train))
+print('test : %.3f' % lr.score(X_test, y_test))
